@@ -1,0 +1,113 @@
+/*TALLER UNO CORTE III
+DAVID ALEJANDRO JÁUREGUI MERCHÁN
+TECNOLOGIA EN DESARROLLO DE SOFTWARE
+SEMESTRE 2024-1
+LENGUAJE DE PROGRAMACION, DOCENTE GEOVANNY POVEDA
+ UNIVERSIDAD DE SAN BUENAVENTURA*/
+#include <stdio.h>
+#include <stdlib.h> // Para la función srand() y rand()
+
+// Tamaño de la matriz (9x9)
+#define FILAS 9
+#define COLUMNAS 9
+#define TOTAL_NUMEROS 81
+
+// Función para intercambiar dos elementos de un arreglo
+void swap(int *a, int *b) {
+  int temp = *a;
+  *a = *b;
+  *b = temp;
+}
+
+// Función para mezclar un arreglo de manera aleatoria
+void shuffle(int *array, int n) {
+  for (int i = n - 1; i > 0; i--) {
+    int j = rand() % (i + 1);
+    swap(&array[i], &array[j]);
+  }
+}
+
+// Función para llenar la matriz con los números mezclados
+void llenarMatriz(int matriz[FILAS][COLUMNAS]) {
+  int numeros[TOTAL_NUMEROS];
+
+  // Llenar el arreglo con los números del 1 al 81
+  for (int i = 0; i < TOTAL_NUMEROS; i++) {
+    numeros[i] = i + 1;
+  }
+
+  // Mezclar el arreglo de números
+  shuffle(numeros, TOTAL_NUMEROS);
+
+  // Llenar la matriz con los números mezclados
+  int contador = 0;
+  for (int i = 0; i < FILAS; i++) {
+    for (int j = 0; j < COLUMNAS; j++) {
+      matriz[i][j] = numeros[contador++];
+    }
+  }
+}
+
+// Función para buscar un número en la matriz
+void buscarEnMatriz(int matriz[FILAS][COLUMNAS], int valor) {
+  int encontrado = 0; // Variable para rastrear si se encontró el número
+
+  for (int i = 0; i < FILAS; i++) {
+    for (int j = 0; j < COLUMNAS; j++) {
+      if (matriz[i][j] == valor) {
+        printf("El número %d está en la posición [%d][%d]\n", valor, i, j);
+        encontrado = 1; // Se encontró el número
+      }
+    }
+  }
+
+  if (!encontrado) {
+    printf("El número %d no se encuentra en la matriz\n", valor);
+  }
+}
+
+// Función principal
+int main() {
+  int matriz[FILAS][COLUMNAS];
+  int numero, opcion;
+
+  do {
+    // Llenar la matriz con números aleatorios
+    llenarMatriz(matriz);
+
+    // Solicitar al usuario el número que desea buscar en la matriz
+    printf("◄ Bienvenido/a al programa de búsqueda de números aleatorios "
+           "dentro de un arreglo de dos dimensiones. ►\n\n"
+           "\nIngrese un número entre 1 y 81 para buscar en la matriz: ");
+    scanf("%d", &numero);
+
+    // Verificar si el número ingresado está en el rango permitido
+    if (numero < 1 || numero > 81) {
+      printf("\n\n\t\t No encontrado\n"
+             "El número ingresado está fuera del rango permitido.\n");
+      printf("¿Desea reiniciar la búsqueda? (1 para sí, otro número para "
+             "salir): ");
+      scanf("%d", &opcion); // Leer la opción del usuario
+
+      if (opcion == 1) {
+        continue; // Volver al inicio del bucle
+      } else {
+        break; // Salir del bucle
+      }
+    }
+
+    // Buscar el número en la matriz
+    buscarEnMatriz(matriz, numero);
+
+    // Preguntar al usuario si desea realizar otra búsqueda
+    printf("\n¿Desea realizar otra búsqueda? (1 para sí, otro número para "
+           "salir): ");
+    scanf("%d", &opcion); // Leer la opción del usuario
+
+  } while (opcion == 1); // Repetir el bucle mientras la opción sea 1
+
+  printf("\n\nGracias por utilizar el arreglo definido en dos dimensiones"
+         "\n\t\t¡Hasta pronto!\n");
+
+  return 0; // Salir del programa con éxito
+}
