@@ -1,0 +1,85 @@
+/*TALLER UNO CORTE III
+    DAVID ALEJANDRO JÁUREGUI MERCHÁN
+    TECNOLOGIA EN DESARROLLO DE SOFTWARE
+    SEMESTRE 2024-1
+    LENGUAJE DE PROGRAMACION, DOCENTE GEOVANNY POVEDA
+     UNIVERSIDAD DE SAN BUENAVENTURA*/
+#include <stdio.h>
+
+// Tamaño del arreglo
+#define TAMANO 88
+
+// Función para llenar el arreglo con números aleatorios
+void llenarArreglo(int arreglo[], int tamano) {
+  for (int i = 0; i < tamano; i++) {
+    arreglo[i] =
+        1 + rand() % 88; // Llena el arreglo con números aleatorios entre 1 y 88
+  }
+}
+
+// Función para buscar un número en el arreglo
+int buscarEnArreglo(int arreglo[], int tamano, int valor) {
+  for (int i = 0; i < tamano; i++) {
+    if (arreglo[i] == valor) {
+      return i; // Retorna la posición si encuentra el número
+    }
+  }
+  return -1; // Retorna -1 si no encuentra el número
+}
+
+// Función principal
+int main() {
+  int arreglo[TAMANO];
+  int Busqueda, posicion;
+  int opcion; // Cambiado a tipo entero
+
+  do { // inicio de bulce tipo do while
+    // Llenar el arreglo con números aleatorios
+    llenarArreglo(arreglo, TAMANO);
+
+    // Solicitar al usuario el número que desea buscar en el arreglo
+    printf("◄ Bienvenido/a al programa de búsqueda de números aleatorios "
+           "dentro de un arreglo de una dimension. ►\n\n"
+           "Ingrese un número entre 1 y 88 para buscar la posición en el "
+           "arreglo: ");
+    scanf("%d", &Busqueda);
+
+    // Verificar si el número ingresado está en el rango permitido
+    if (Busqueda < 1 || Busqueda > 88) {
+      printf("\n\n\t\t No encontrado\n"
+             "El número ingresado está fuera del rango permitido.\n");
+      printf("¿Desea reiniciar la búsqueda? (1 para sí, otro número para "
+             "salir): ");
+      scanf("%d", &opcion); // Cambiado a %d para leer un entero
+
+      if (opcion == 1) {
+        continue; // Volver al inicio del bucle
+      } else {
+        break; // Salir del bucle
+      }
+    }
+
+    // Buscar el número en el arreglo
+    posicion = buscarEnArreglo(arreglo, TAMANO, Busqueda);
+
+    // Mostrar el resultado de la búsqueda
+    if (posicion != -1) {
+      printf("Valor encontrado en la posición %d\n", posicion);
+    } else {
+      printf("Valor no encontrado\n");
+    }
+
+    // Preguntar al usuario si desea realizar otra búsqueda
+    printf("\n__________________________\n"
+           "¿Desea realizar otra búsqueda?\n\n"
+           "Ingrese el número uno (1) si desea continuar o cualquier otro "
+           "número si desea salir:  ");
+    scanf("%d", &opcion); // Cambiado a %d para leer un entero
+
+  } while (opcion == 1); // Repetir el bucle mientras la opción sea 1
+
+  printf("\n\nGracias por utilizar el arreglo definido en una dimension\n"
+         "\n\t\t¡Hasta pronto!\n");
+
+  return 0; // Salir del programa con éxito
+}
